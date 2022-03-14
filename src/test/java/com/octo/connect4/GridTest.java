@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class GridTest {
     @Test
-    public void checkIfTheMatrixDimensionIs6x7() {
+    public void getMatrixCheckIfTheMatrixDimensionIs6x7() {
         Grid<Integer> grid = new Grid<>();
 
         Integer[][] matrix = grid.getMatrix();
@@ -15,7 +15,7 @@ public class GridTest {
     }
 
     @Test
-    public void checkIfMatrixInitializedWith0s() {
+    public void getMatrixCheckIfMatrixInitializedWith0s() {
         Grid<Integer> grid = new Grid<>();
 
         Integer[][] expected = {{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}};
@@ -23,5 +23,4 @@ public class GridTest {
 
         Assert.assertEquals(expected, matrix);
     }
-
 }
