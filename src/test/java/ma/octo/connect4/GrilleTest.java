@@ -21,28 +21,42 @@ public class GrilleTest {
     }
 
     @Test
-    public void insertInColumnShouldInsertHelloInTheLastRowOfFirstColumn() throws Exception {
+    public void insertInColumnShouldInsertHelloInTheFirstRowOfFirstColumn() throws Exception {
         Grille grille = new Grille();
 
         int column = 1;
-        int row = grille.getRowsLength() - 1;
+        int row = 0;
 
         grille.insertInColumn(column, "hello");
-
 
         assertEquals("hello", grille.getValueOfCoordinates(column, row));
     }
 
     @Test
-    public void insertInColumnShouldInsertTestInTheBeforeLastRowOfThePreFilledFirstColumn() throws Exception {
+    public void insertInColumnShouldInsertTestInTheSecondRowOfThePreFilledFirstColumn() throws Exception {
         Grille grille = new Grille();
 
         int column = 1;
-        int row = grille.getRowsLength() - 2;
+        int row = 1;
 
         grille.insertInColumn(column, "hello");
         grille.insertInColumn(column, "test");
 
         assertEquals("test", grille.getValueOfCoordinates(column, row));
+    }
+
+    @Test
+    public void insertInColumnShouldInsertBonjourInTheLastRowOfThePreFilledFirstColumn() throws Exception {
+        Grille grille = new Grille();
+
+        int column = 1;
+        int row = grille.getRowsLength() - 1;
+
+        for (int i = 0; i < grille.getRowsLength() - 1; i++) {
+            grille.insertInColumn(column, "hello");
+        }
+        grille.insertInColumn(column, "bonjour");
+
+        assertEquals("bonjour", grille.getValueOfCoordinates(column, row));
     }
 }
