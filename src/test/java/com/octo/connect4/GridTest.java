@@ -29,4 +29,13 @@ public class GridTest {
             grid.insertForX(0, "hello");
         });
     }
+
+    @Test
+    public void testItInitializesTheMatrixWithDots() {
+        Grid grid = new Grid();
+
+        grid.getAllValues().forEach((element) -> {
+            Assert.assertEquals(".", element);
+        });
+    }
 }
