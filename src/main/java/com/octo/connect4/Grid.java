@@ -1,26 +1,22 @@
 package com.octo.connect4;
 
-public class Grid<T> {
-    private Integer[][] matrix;
+import java.util.List;
+
+public class Grid {
+    private List<List<String>> matrix;
 
     public Grid() {
         int rows = 6;
         int cols = 7;
-
-        this.matrix = new Integer[6][7];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                matrix[i][j] = 0;
-            }
-        }
+        //
     }
 
-    public Integer[][] getMatrix() {
-        return matrix;
+
+    public int getColsLength() {
+        return 7;
     }
 
-    public void insertForX(Integer x) throws Exception {
-        if (x > 7)
-            throw new Exception("X should not be greater than 7!");
+    public int getRowsLength() {
+        return 6;
     }
 }
