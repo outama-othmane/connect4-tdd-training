@@ -24,5 +24,14 @@ public class GridTest {
         Assert.assertEquals(expected, matrix);
     }
 
+    @Test
+    public void insertForXItShouldThrowAnExceptionIfXIsGreaterThan7() {
+        Grid<Integer> grid = new Grid<>();
+
+        Assert.assertThrows(Exception.class, () -> {
+            grid.insertForX(8);
+        });
+    }
+
 
 }

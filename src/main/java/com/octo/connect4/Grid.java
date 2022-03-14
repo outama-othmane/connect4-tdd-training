@@ -18,4 +18,9 @@ public class Grid<T> {
     public Integer[][] getMatrix() {
         return matrix;
     }
+
+    public void insertForX(Integer x) throws Exception {
+        if (x > 7)
+            throw new Exception("X should not be greater than 7!");
+    }
 }
