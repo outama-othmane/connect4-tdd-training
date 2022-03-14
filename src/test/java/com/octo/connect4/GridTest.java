@@ -20,4 +20,13 @@ public class GridTest {
             grid.insertForX(8, "hello");
         });
     }
+
+    @Test
+    public void testItShouldThrowAnExceptionIfXIsLessThan1() {
+        Grid grid = new Grid();
+
+        Assert.assertThrows(Exception.class, () -> {
+            grid.insertForX(0, "hello");
+        });
+    }
 }
