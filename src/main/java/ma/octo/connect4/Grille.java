@@ -7,6 +7,9 @@ public class Grille {
 
     public void insertInColumn(int column) throws Exception {
         if (column > 7)
-            throw new Exception("Column should not be greater than 7!");
+            throw new Exception("Column should not be greater than 7");
+
+        if (column < 1)
+            throw new Exception("Column should not be less than 1");
     }
 }
