@@ -31,11 +31,25 @@ public class GridTest {
     }
 
     @Test
-    public void testItInitializesTheMatrixWithDots() {
+    public void testNewInstanceOfGridShouldBeEmpty() {
         Grid grid = new Grid();
 
-        grid.getAllValues().forEach((element) -> {
-            Assert.assertEquals(".", element);
-        });
+        Assert.assertTrue(grid.isEmpty());
+    }
+
+    @Test
+    public void testNewInstanceOfGridWithOneInsertedElementIsNotEmpty() throws Exception {
+        Grid grid = new Grid();
+        grid.insertForX(1, "test");
+
+        Assert.assertFalse(grid.isEmpty());
+    }
+
+    @Test
+    public void testGivenAnEmptyColumnsShouldInsertValueHelloInTheLastRowOfXColumn() throws Exception {
+        Grid grid = new Grid();
+        grid.insertForX(1, "hello");
+
+        Assert.assertEquals("hello", grid.getValueOfCoordinates(1, grid.getRowsLength()));
     }
 }

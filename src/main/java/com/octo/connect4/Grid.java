@@ -40,12 +40,26 @@ public class Grid {
 
         if (x < 1)
             throw new Exception("X should not be less than 1!");
+
+
+        List<String> rowX = matrix.get(x);
+        rowX.add(1, value);
+
+        matrix.add(x, rowX);
     }
 
     public Collection<String> getAllValues() {
         Collection<String> values = new ArrayList<>();
         matrix.forEach(values::addAll);
-
+        
         return values;
+    }
+
+    public boolean isEmpty() {
+        return matrix.stream().flatMap(List::stream).allMatch("."::equals);
+    }
+
+    public String getValueOfCoordinates(int column, int row) {
+        return "hello";
     }
 }
