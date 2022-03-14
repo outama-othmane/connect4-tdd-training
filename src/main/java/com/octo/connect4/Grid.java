@@ -2,6 +2,7 @@ package com.octo.connect4;
 
 public class Grid<T> {
     public Integer[][] getMatrix() {
-        return new Integer[6][7];
+        Integer[][] matrix = {{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}};
+        return matrix;
     }
 }

@@ -14,4 +14,14 @@ public class GridTest {
         Assert.assertEquals(7, matrix[0].length);
     }
 
+    @Test
+    public void checkIfMatrixInitializedWith0s() {
+        Grid<Integer> grid = new Grid<>();
+
+        Integer[][] expected = {{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}};
+        Integer[][] matrix = grid.getMatrix();
+
+        Assert.assertEquals(expected, matrix);
+    }
+
 }
