@@ -69,4 +69,17 @@ public class Grille {
             .flatMap(List::stream)
             .allMatch(DEFAULT_INITIALIZATION_VALUE::equals);
     }
+
+    public void clear() {
+        for (int i= 0; i < getColsLength(); i++) {
+            List<String> rows = tokens.get(i);
+
+            for (int j = 0; j < getRowsLength(); j++) {
+                rows.remove(j);
+                rows.add(j, DEFAULT_INITIALIZATION_VALUE);
+            }
+            this.tokens.remove(i);
+            this.tokens.add(i, rows);
+        }
+    }
 }

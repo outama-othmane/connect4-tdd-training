@@ -85,4 +85,14 @@ public class GrilleTest {
 
         assertFalse(grille.isEmpty());
     }
+
+    @Test
+    public void shouldGrilleWithSomeValuesBeEmptyIfClearCalled() throws Exception {
+        Grille grille = new Grille();
+        grille.insertInColumn(1, "test");
+
+        grille.clear();
+
+        assertTrue(grille.isEmpty());
+    }
 }
