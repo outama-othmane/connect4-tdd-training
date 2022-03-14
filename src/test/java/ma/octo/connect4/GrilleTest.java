@@ -103,11 +103,31 @@ public class GrilleTest {
                 "......\n" +
                 "......\n" +
                 "......\n" +
+                "......\n";
+
+
+        Grille grille = new Grille();
+        String result = grille.grilleAsString();
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void grilleAsStringShouldReturnTheNotFullyCompletedGrille() throws Exception {
+        String expected = "......\n" +
+                "testhello....\n" +
+                "......\n" +
+                "......\n" +
+                "bonjour.....\n" +
                 "......\n" +
                 "......\n";
 
 
         Grille grille = new Grille();
+        grille.insertInColumn(1, "test");
+        grille.insertInColumn(1, "hello");
+        grille.insertInColumn(4, "bonjour");
+
         String result = grille.grilleAsString();
 
         assertEquals(expected, result);

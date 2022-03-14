@@ -84,13 +84,14 @@ public class Grille {
     }
 
     public String grilleAsString() {
-        String grille = "";
+        StringBuilder grille = new StringBuilder();
         for (List<String> column : tokens) {
             for (String token : column) {
-                grille += token;
+                grille.append(token);
             }
-            grille += "\n";
+            grille.append("\n");
         }
-        return grille;
+
+        return grille.toString();
     }
 }
