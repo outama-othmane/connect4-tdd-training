@@ -95,4 +95,21 @@ public class GrilleTest {
 
         assertTrue(grille.isEmpty());
     }
+
+    @Test
+    public void grilleAsStringShouldReturnTheEmptyGrille() {
+        String expected = "......\n" +
+                "......\n" +
+                "......\n" +
+                "......\n" +
+                "......\n" +
+                "......\n" +
+                "......\n";
+
+
+        Grille grille = new Grille();
+        String result = grille.grilleAsString();
+
+        assertEquals(expected, result);
+    }
 }

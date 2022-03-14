@@ -82,4 +82,15 @@ public class Grille {
             this.tokens.add(i, rows);
         }
     }
+
+    public String grilleAsString() {
+        String grille = "";
+        for (List<String> column : tokens) {
+            for (String token : column) {
+                grille += token;
+            }
+            grille += "\n";
+        }
+        return grille;
+    }
 }
