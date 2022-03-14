@@ -59,4 +59,16 @@ public class GrilleTest {
 
         assertEquals("bonjour", grille.getValueOfCoordinates(column, row));
     }
+
+    @Test
+    public void insertInColumnShouldThrowAnExceptionIfTheColumnIsFilled() throws Exception {
+        Grille grille = new Grille();
+        int column = 6;
+
+        for (int i = 0; i < grille.getRowsLength(); i++) {
+            grille.insertInColumn(column, "hello");
+        }
+
+        assertThrows(ColumnGrilleException.class, () -> grille.insertInColumn(column, "bonjour"));
+    }
 }
