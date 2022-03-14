@@ -24,11 +24,25 @@ public class GrilleTest {
     public void insertInColumnShouldInsertHelloInTheLastRowOfFirstColumn() throws Exception {
         Grille grille = new Grille();
 
-        int column = 1, row = grille.getRowsLength() - 1;
+        int column = 1;
+        int row = grille.getRowsLength() - 1;
 
         grille.insertInColumn(column, "hello");
 
 
         assertEquals("hello", grille.getValueOfCoordinates(column, row));
+    }
+
+    @Test
+    public void insertInColumnShouldInsertTestInTheBeforeLastRowOfThePreFilledFirstColumn() throws Exception {
+        Grille grille = new Grille();
+
+        int column = 1;
+        int row = grille.getRowsLength() - 2;
+
+        grille.insertInColumn(column, "hello");
+        grille.insertInColumn(column, "test");
+
+        assertEquals("test", grille.getValueOfCoordinates(column, row));
     }
 }
