@@ -19,4 +19,9 @@ public class Grid {
     public int getRowsLength() {
         return 6;
     }
+
+    public void insertForX(int x, String hello) throws Exception {
+        if (x > 7)
+            throw new Exception("X should not be greater than 7!");
+    }
 }

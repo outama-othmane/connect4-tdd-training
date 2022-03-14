@@ -11,4 +11,13 @@ public class GridTest {
         Assert.assertEquals(7, grid.getColsLength());
         Assert.assertEquals(6, grid.getRowsLength());
     }
+
+    @Test
+    public void testItShouldThrowAnExceptionIfXIsGreaterThan7() {
+        Grid grid = new Grid();
+
+        Assert.assertThrows(Exception.class, () -> {
+            grid.insertForX(8, "hello");
+        });
+    }
 }
