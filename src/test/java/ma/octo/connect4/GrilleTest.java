@@ -77,4 +77,12 @@ public class GrilleTest {
         Grille grille = new Grille();
         assertTrue(grille.isEmpty());
     }
+
+    @Test
+    public void shouldReturnFalseForAGrilleWithValues() throws Exception {
+        Grille grille = new Grille();
+        grille.insertInColumn(1, "test");
+
+        assertFalse(grille.isEmpty());
+    }
 }

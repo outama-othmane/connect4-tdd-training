@@ -65,6 +65,8 @@ public class Grille {
     }
 
     public boolean isEmpty() {
-        return true;
+        return tokens.stream()
+            .flatMap(List::stream)
+            .allMatch(DEFAULT_INITIALIZATION_VALUE::equals);
     }
 }
