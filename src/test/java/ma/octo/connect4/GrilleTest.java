@@ -71,4 +71,10 @@ public class GrilleTest {
 
         assertThrows(ColumnGrilleException.class, () -> grille.insertInColumn(column, "bonjour"));
     }
+
+    @Test
+    public void testGrilleIsEmptyForNewInitializedInstance() {
+        Grille grille = new Grille();
+        assertTrue(grille.isEmpty());
+    }
 }

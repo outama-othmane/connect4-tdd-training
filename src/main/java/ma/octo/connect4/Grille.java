@@ -63,4 +63,8 @@ public class Grille {
     public int getColsLength() {
         return 7;
     }
+
+    public boolean isEmpty() {
+        return true;
+    }
 }
