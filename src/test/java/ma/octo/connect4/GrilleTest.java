@@ -22,9 +22,12 @@ public class GrilleTest {
 
     @Test
     public void insertInColumnShouldInsertHelloInTheLastRowOfFirstColumn() throws Exception {
-        int column = 1, row = 0;
         Grille grille = new Grille();
-        grille.insertInColumn(1, "hello");
+
+        int column = 1, row = grille.getRowsLength() - 1;
+
+        grille.insertInColumn(column, "hello");
+
 
         assertEquals("hello", grille.getValueOfCoordinates(column, row));
     }

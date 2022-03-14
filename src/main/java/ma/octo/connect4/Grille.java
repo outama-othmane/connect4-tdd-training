@@ -16,4 +16,8 @@ public class Grille {
     public String getValueOfCoordinates(int column, int row) {
         return "hello";
     }
+
+    public int getRowsLength() {
+        return 6;
+    }
 }
