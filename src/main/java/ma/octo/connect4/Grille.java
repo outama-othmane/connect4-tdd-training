@@ -29,7 +29,7 @@ public class Grille {
         List<String> rowsOfColumn = tokens.get(column);
         int availableRow = getAvailableRow(column, rowsOfColumn);
 
-        // Replace the value of the row in the column
+        // Replace the value of column's rows
         rowsOfColumn.remove(availableRow);
         rowsOfColumn.add(availableRow, value);
     }
