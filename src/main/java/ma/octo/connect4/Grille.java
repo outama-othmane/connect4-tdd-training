@@ -10,7 +10,7 @@ public class Grille {
 
     public Grille() {
         this.tokens = new ArrayList<>();
-        for (int i= 0; i < getColsLength(); i++) {
+        for (int i = 0; i < getColsLength(); i++) {
             List<String> rows = new ArrayList<>();
             for (int j = 0; j < getRowsLength(); j++) {
                 rows.add(j, DEFAULT_INITIALIZATION_VALUE);
@@ -29,20 +29,17 @@ public class Grille {
         List<String> rowsOfColumn = tokens.get(column);
         int availableRow = getAvailableRow(column, rowsOfColumn);
 
+        // Replace the value of the row in the column
         rowsOfColumn.remove(availableRow);
         rowsOfColumn.add(availableRow, value);
-
-        tokens.remove(column);
-        tokens.add(column, rowsOfColumn);
     }
 
     private int getAvailableRow(int column, List<String> rowsOfColumn) throws ColumnGrilleException {
         int availableRow = -1;
         for (int i = 0; i < getRowsLength(); i++) {
-            if (DEFAULT_INITIALIZATION_VALUE.equals(rowsOfColumn.get(i))) {
+            if (DEFAULT_INITIALIZATION_VALUE.equals(rowsOfColumn.get(i)))
                 availableRow = i;
-                break;
-            }
+            else break;
         }
 
         if (availableRow == -1) {
@@ -71,23 +68,14 @@ public class Grille {
     }
 
     public void clear() {
-        for (int i= 0; i < getColsLength(); i++) {
-            List<String> rows = tokens.get(i);
-
-            for (int j = 0; j < getRowsLength(); j++) {
-                rows.remove(j);
-                rows.add(j, DEFAULT_INITIALIZATION_VALUE);
-            }
-            this.tokens.remove(i);
-            this.tokens.add(i, rows);
-        }
+        tokens.forEach(rows -> rows.replaceAll(token -> DEFAULT_INITIALIZATION_VALUE));
     }
 
     public String grilleAsString() {
         StringBuilder grille = new StringBuilder();
-        for (List<String> column : tokens) {
-            for (String token : column) {
-                grille.append(token);
+        for (int i = 0; i < getRowsLength(); i++) {
+            for (int j = 0; j < getColsLength(); j++) {
+                grille.append(tokens.get(j).get(i));
             }
             grille.append("\n");
         }

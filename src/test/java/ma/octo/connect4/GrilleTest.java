@@ -21,11 +21,11 @@ public class GrilleTest {
     }
 
     @Test
-    public void insertInColumnShouldInsertHelloInTheFirstRowOfFirstColumn() throws Exception {
+    public void insertInColumnShouldInsertHelloInTheLastRowOfFirstColumn() throws Exception {
         Grille grille = new Grille();
 
         int column = 1;
-        int row = 0;
+        int row = grille.getRowsLength() - 1;
 
         grille.insertInColumn(column, "hello");
 
@@ -33,11 +33,11 @@ public class GrilleTest {
     }
 
     @Test
-    public void insertInColumnShouldInsertTestInTheSecondRowOfThePreFilledFirstColumn() throws Exception {
+    public void insertInColumnShouldInsertTestInTheBeforeLastRowOfThePreFilledFirstColumn() throws Exception {
         Grille grille = new Grille();
 
         int column = 1;
-        int row = 1;
+        int row = grille.getRowsLength() - 2;
 
         grille.insertInColumn(column, "hello");
         grille.insertInColumn(column, "test");
@@ -46,11 +46,11 @@ public class GrilleTest {
     }
 
     @Test
-    public void insertInColumnShouldInsertBonjourInTheLastRowOfThePreFilledFirstColumn() throws Exception {
+    public void insertInColumnShouldInsertBonjourInTheFirstRowOfThePreFilledFirstColumn() throws Exception {
         Grille grille = new Grille();
 
         int column = 1;
-        int row = grille.getRowsLength() - 1;
+        int row = 0;
 
         for (int i = 0; i < grille.getRowsLength() - 1; i++) {
             grille.insertInColumn(column, "hello");
@@ -98,13 +98,12 @@ public class GrilleTest {
 
     @Test
     public void grilleAsStringShouldReturnTheEmptyGrille() {
-        String expected = "......\n" +
-                "......\n" +
-                "......\n" +
-                "......\n" +
-                "......\n" +
-                "......\n";
-
+        String expected = ".......\n" +
+            ".......\n" +
+            ".......\n" +
+            ".......\n" +
+            ".......\n" +
+            ".......\n";
 
         Grille grille = new Grille();
         String result = grille.grilleAsString();
@@ -114,14 +113,13 @@ public class GrilleTest {
 
     @Test
     public void grilleAsStringShouldReturnTheNotFullyCompletedGrille() throws Exception {
-        String expected = "......\n" +
-                "testhello....\n" +
-                "......\n" +
-                "......\n" +
-                "bonjour.....\n" +
-                "......\n" +
-                "......\n";
-
+        String expected =
+            ".......\n" +
+            ".......\n" +
+            ".......\n" +
+            ".......\n" +
+            ".hello.....\n" +
+            ".test..bonjour..\n";
 
         Grille grille = new Grille();
         grille.insertInColumn(1, "test");
