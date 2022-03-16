@@ -5,47 +5,37 @@ import java.util.Optional;
 
 public class Analyseur {
     public Optional<String> checkForWinner(GrilleAxes grille) {
-        List<List<String>> rows = grille.getGrilleRows();
+        Optional<String> winnerFromRows = checkForWinnerForGivenList(grille.getGrilleRows());
+        if (winnerFromRows.isPresent()) {
+            return winnerFromRows;
+        }
 
-        for (List<String> row : rows) {
-            String token = row.get(0);
+        Optional<String> winnerFromColumns = checkForWinnerForGivenList(grille.getGrilleColumns());
+        if (winnerFromColumns.isPresent()) {
+            return winnerFromColumns;
+        }
+
+        return Optional.empty();
+    }
+
+    private Optional<String> checkForWinnerForGivenList(List<List<String>> elements) {
+        for (List<String> element : elements) {
+            String token = element.get(0);
             int counter = 1;
 
-            for (int i = 1; i < row.size(); i++) {
+            for (int i = 1; i < element.size(); i++) {
                 if (counter >= 4) {
                     return Optional.of(token);
                 }
 
-                if (!token.equals(Grille.DEFAULT_INITIALIZATION_VALUE) && token.equals(row.get(i))) {
+                if (!token.equals(Grille.DEFAULT_INITIALIZATION_VALUE) && token.equals(element.get(i))) {
                     counter++;
                 } else {
-                    token = row.get(i);
+                    token = element.get(i);
                     counter = 1;
                 }
             }
         }
-
-        List<List<String>> columns = grille.getGrilleColumns();
-
-        for (List<String> column : columns) {
-            String token = column.get(0);
-            int counter = 1;
-
-            for (int i = 1; i < column.size(); i++) {
-                if (counter >= 4) {
-                    return Optional.of(token);
-                }
-
-                if (!token.equals(Grille.DEFAULT_INITIALIZATION_VALUE) && token.equals(column.get(i))) {
-                    counter++;
-                } else {
-                    token = column.get(i);
-                    counter = 1;
-                }
-            }
-        }
-
-
 
         return Optional.empty();
     }
