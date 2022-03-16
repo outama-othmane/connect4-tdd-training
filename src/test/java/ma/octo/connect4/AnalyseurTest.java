@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class AnalyseurTest {
     @Test
-    public void givenAGridWithOnlyOneTokenShouldReturnEmpty() {
+    public void givenAGridWithOnlyOneTokenShouldReturnEmpty() throws AnalyseurDrawException {
 
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.getGrilleRows()).thenReturn(getInitializedListOfListString(6, 7));
@@ -24,7 +25,7 @@ public class AnalyseurTest {
     }
 
     @Test
-    public void givenAGridWith4SuccessiveTokensHorizontallyShouldReturnOptionalWithToken() {
+    public void givenAGridWith4SuccessiveTokensHorizontallyShouldReturnOptionalWithToken() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.getGrilleRows())
             .thenReturn(getRowsWith4SuccessiveXInTheSixthRow());
@@ -38,7 +39,7 @@ public class AnalyseurTest {
     }
 
     @Test
-    public void givenAGridWith4SuccessiveTokensVerticallyShouldReturnOptionalWithToken() {
+    public void givenAGridWith4SuccessiveTokensVerticallyShouldReturnOptionalWithToken() throws AnalyseurDrawException {
 
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.getGrilleColumns()).thenReturn(getColumnsWith4SuccessiveOInTheSeventhColumn());
@@ -52,7 +53,7 @@ public class AnalyseurTest {
     }
 
     @Test
-    public void givenAGridWith4SuccessiveTokensDiagonallyShouldReturnOptionalWithToken() {
+    public void givenAGridWith4SuccessiveTokensDiagonallyShouldReturnOptionalWithToken() throws AnalyseurDrawException {
 
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.getGrilleDiagonals()).thenReturn(getDiagonalsWith4SuccessiveX());
@@ -63,6 +64,22 @@ public class AnalyseurTest {
         Optional<String> expected = Optional.of("x");
 
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void givenAFullGridWithNoWinnerShouldThrowException() {
+
+        List<List<String>> list = new ArrayList<>();
+        list.add(List.of("o", "x", "o", "x"));
+        list.add(List.of("x", "x", "o", "x"));
+        list.add(List.of("o", "o", "o", "x"));
+        list.add(List.of("o", "o", "o", "x"));
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.getGrilleRows()).thenReturn(list);
+
+        Analyseur analyseur = new Analyseur();
+        assertThrows(AnalyseurDrawException.class, () -> analyseur.checkForWinner(grille));
     }
 
     private List<List<String>> getDiagonalsWith4SuccessiveX() {

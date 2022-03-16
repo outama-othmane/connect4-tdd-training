@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Analyseur {
-    public Optional<String> checkForWinner(GrilleAxes grille) {
+    public Optional<String> checkForWinner(GrilleAxes grille) throws AnalyseurDrawException {
         Optional<String> winnerFromRows = checkForWinnerForGivenList(grille.getGrilleRows());
         if (winnerFromRows.isPresent()) {
             return winnerFromRows;
@@ -16,8 +16,23 @@ public class Analyseur {
         }
 
         Optional<String> winnerFromDiagonals = checkForWinnerForGivenList(grille.getGrilleDiagonals());
-        return winnerFromDiagonals;
+        if (winnerFromDiagonals.isPresent()) {
+            return winnerFromDiagonals;
+        }
 
+        if (checkIfDraw(grille)) {
+            throw new AnalyseurDrawException();
+        }
+
+        return Optional.empty();
+
+    }
+
+    private boolean checkIfDraw(GrilleAxes grille) {
+        return grille.getGrilleRows()
+                .stream()
+                .flatMap(List::stream)
+                .noneMatch(Grille.DEFAULT_INITIALIZATION_VALUE::equals);
     }
 
     private Optional<String> checkForWinnerForGivenList(List<List<String>> elements) {
