@@ -1,9 +1,16 @@
 package ma.octo.connect4;
 
+import java.util.Optional;
+
 public class Application {
+    public final static String PLAYER_1 = "Player1";
+    public final static String PLAYER_2 = "Player2";
+
     private  GrilleAxes grille;
     private Analyseur analyseur;
     private Vue vue;
+    private String currentPlayer = PLAYER_1;
+
 
     public Application(GrilleAxes grille, Analyseur analyseur, Vue vue) {
         this.analyseur = analyseur;
@@ -12,19 +19,18 @@ public class Application {
     }
 
     public void play() {
-        vue.write(grille.grilleAsString());
-        vue.write("Player1 enter column number [1-7]: ");
+        Optional<String> winner = Optional.empty();
+        do {
+            vue.write(grille.grilleAsString());
+            vue.write(String.format("%s enter column number [1-7]: ", currentPlayer));
+            promptUserInput();
+            currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
 
-        String player = "o";
-        int column = promptUserInput() - 1;
+            try {
+                winner = analyseur.checkForWinner(grille);
+            } catch (AnalyseurDrawException ignored) {}
 
-        try {
-            grille.insertInColumn(column, player);
-        } catch (Exception ignored) {
-
-        }
-
-        vue.write(grille.grilleAsString());
+        } while (winner.isEmpty());
     }
 
     private int promptUserInput() {
@@ -43,6 +49,19 @@ public class Application {
         if (userChosenColumn < 1)
             vue.write("Please enter a valid number between [1-7].");
 
+        insertUserInputToGrid(userChosenColumn);
+
         return userChosenColumn;
+    }
+
+    private void insertUserInputToGrid(int userChosenColumn) {
+        String player = "o";
+        int column = userChosenColumn - 1;
+
+        try {
+            grille.insertInColumn(column, player);
+        } catch (Exception ignored) {
+
+        }
     }
 }

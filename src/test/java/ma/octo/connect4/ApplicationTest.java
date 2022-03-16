@@ -3,29 +3,34 @@ package ma.octo.connect4;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Optional;
+
 public class ApplicationTest {
 
     @Test
-    public void playShouldCallWriteVueAndPrintInitialGrid() {
+    public void playShouldCallWriteVueAndPrintInitialGrid() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
 
-        Mockito.verify(vue, Mockito.times(2)).write(grille.grilleAsString());
+        Mockito.verify(vue).write(grille.grilleAsString());
     }
 
     @Test
-    public void playShouldPrintCurrentPlayerMessageAfterInit() {
+    public void playShouldPrintCurrentPlayerMessageAfterInit() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
 
         Application application = new Application(grille, analyseur, vue);
@@ -35,11 +40,13 @@ public class ApplicationTest {
     }
 
     @Test
-    public void playShouldReadTheUserChosenColumn() {
+    public void playShouldReadTheUserChosenColumn() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
 
         Application application = new Application(grille, analyseur, vue);
@@ -49,11 +56,13 @@ public class ApplicationTest {
     }
 
     @Test
-    public void playShouldPrintTryAgainMessageIfTheUserEntersHello() {
+    public void playShouldPrintTryAgainMessageIfTheUserEntersHello() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
         Mockito.when(vue.read()).thenReturn("hello");
 
@@ -64,11 +73,13 @@ public class ApplicationTest {
     }
 
     @Test
-    public void playShouldPrintTryAgainMessageIfTheUserEnters8() {
+    public void playShouldPrintTryAgainMessageIfTheUserEnters8() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
         Mockito.when(vue.read()).thenReturn("8");
 
@@ -79,11 +90,13 @@ public class ApplicationTest {
     }
 
     @Test
-    public void playShouldPrintTryAgainMessageIfTheUserEnters0() {
+    public void playShouldPrintTryAgainMessageIfTheUserEnters0() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
         Mockito.when(vue.read()).thenReturn("0");
 
@@ -100,7 +113,9 @@ public class ApplicationTest {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(". . .");
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
         Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
 
@@ -111,7 +126,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void playShouldPrintAgainTheGridAfterFirstPlayerTurn() {
+    public void playShouldPrintAgainTheGridAfterFirstPlayerTurn() throws AnalyseurDrawException {
         int chosenColumn = 4;
         String firstGrid = ". . .";
         String secondGrid = "SECOND TIME";
@@ -119,7 +134,9 @@ public class ApplicationTest {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
         Mockito.when(grille.grilleAsString()).thenReturn(firstGrid).thenReturn(secondGrid);
 
-        Analyseur analyseur = new Analyseur();
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.empty()).thenReturn(Optional.of("String"));
+
         Vue vue = Mockito.mock(Vue.class);
         Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
 
@@ -128,6 +145,25 @@ public class ApplicationTest {
 
         Mockito.verify(vue).write(firstGrid);
         Mockito.verify(vue).write(secondGrid);
+    }
+
+    @Test
+    public void playShouldPrintPlayer2MessageAfterPlayer1Round() throws AnalyseurDrawException {
+        int chosenColumn = 4;
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(". . .");
+
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.empty()).thenReturn(Optional.of("String"));
+
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write("Player2 enter column number [1-7]: ");
     }
 
 
