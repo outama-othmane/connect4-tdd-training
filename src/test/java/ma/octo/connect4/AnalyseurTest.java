@@ -14,7 +14,7 @@ public class AnalyseurTest {
     public void givenAGridWithOnlyOneTokenShouldReturnEmpty() {
 
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
-        Mockito.when(grille.getGrilleRows()).thenReturn(getInitializedRows());
+        Mockito.when(grille.getGrilleRows()).thenReturn(getInitializedListOfListString(6, 7));
 
         Analyseur analyseur = new Analyseur();
         Optional<String> result = analyseur.checkForWinner(grille);
@@ -38,7 +38,7 @@ public class AnalyseurTest {
     }
 
     private List<List<String>> getRowsWith4SuccessiveXInTheSixthRow() {
-        List<List<String>> rows = getInitializedListOfListString();
+        List<List<String>> rows = getInitializedListOfListString(6, 7);
 
         List<String> row = rows.get(5);
         row.set(0, "x");
@@ -48,11 +48,11 @@ public class AnalyseurTest {
         return rows;
     }
 
-    private List<List<String>> getInitializedListOfListString() {
+    private List<List<String>> getInitializedListOfListString(int firstListLength, int secondListLength) {
         List<List<String>> mockitoRows = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < firstListLength; i++) {
             List<String> rows = new ArrayList<>();
-            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < secondListLength; j++) {
                 rows.add(j, ".");
             }
             mockitoRows.add(i, rows);
