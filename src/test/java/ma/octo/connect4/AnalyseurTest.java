@@ -25,18 +25,9 @@ public class AnalyseurTest {
 
     @Test
     public void givenAGridWith4SuccessiveTokensHorizontallyShouldReturnOptionalWithToken() {
-        /////
-        List<List<String>> rows = getInitializedRows();
-
-        List<String> row = rows.get(5);
-        row.set(0, "x");
-        row.set(1, "x");
-        row.set(2, "x");
-        row.set(3, "x");
-        /////
-
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
-        Mockito.when(grille.getGrilleRows()).thenReturn(rows);
+        Mockito.when(grille.getGrilleRows())
+            .thenReturn(getRowsWith4SuccessiveXInTheSixthRow());
 
         Analyseur analyseur = new Analyseur();
         Optional<String> result = analyseur.checkForWinner(grille);
@@ -46,7 +37,18 @@ public class AnalyseurTest {
         assertEquals(expected, result);
     }
 
-    private List<List<String>> getInitializedRows() {
+    private List<List<String>> getRowsWith4SuccessiveXInTheSixthRow() {
+        List<List<String>> rows = getInitializedListOfListString();
+
+        List<String> row = rows.get(5);
+        row.set(0, "x");
+        row.set(1, "x");
+        row.set(2, "x");
+        row.set(3, "x");
+        return rows;
+    }
+
+    private List<List<String>> getInitializedListOfListString() {
         List<List<String>> mockitoRows = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             List<String> rows = new ArrayList<>();
