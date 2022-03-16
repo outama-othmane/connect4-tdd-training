@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AnalyseurTest {
     @Test
@@ -51,6 +51,30 @@ public class AnalyseurTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void givenAGridWith4SuccessiveTokensDiagonallyShouldReturnOptionalWithToken() {
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.getGrilleDiagonals()).thenReturn(getDiagonalsWith4SuccessiveX());
+
+        Analyseur analyseur = new Analyseur();
+        Optional<String> result = analyseur.checkForWinner(grille);
+
+        Optional<String> expected = Optional.of("x");
+
+        assertEquals(expected, result);
+    }
+
+    private List<List<String>> getDiagonalsWith4SuccessiveX() {
+        List<List<String>> diagonals = new ArrayList<>();
+        diagonals.add(List.of(Grille.DEFAULT_INITIALIZATION_VALUE));
+        diagonals.add(List.of(Grille.DEFAULT_INITIALIZATION_VALUE, "x"));
+        diagonals.add(List.of(Grille.DEFAULT_INITIALIZATION_VALUE, "x", "x"));
+        diagonals.add(List.of("x", "x", "x", "x"));
+
+        return diagonals;
+    }
+
     private List<List<String>> getColumnsWith4SuccessiveOInTheSeventhColumn() {
         List<List<String>> columns = getInitializedListOfListString(7, 6);
 
@@ -78,7 +102,7 @@ public class AnalyseurTest {
         for (int i = 0; i < firstListLength; i++) {
             List<String> rows = new ArrayList<>();
             for (int j = 0; j < secondListLength; j++) {
-                rows.add(j, ".");
+                rows.add(j, Grille.DEFAULT_INITIALIZATION_VALUE);
             }
             mockitoRows.add(i, rows);
         }

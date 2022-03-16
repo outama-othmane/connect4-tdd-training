@@ -15,7 +15,9 @@ public class Analyseur {
             return winnerFromColumns;
         }
 
-        return Optional.empty();
+        Optional<String> winnerFromDiagonals = checkForWinnerForGivenList(grille.getGrilleDiagonals());
+        return winnerFromDiagonals;
+
     }
 
     private Optional<String> checkForWinnerForGivenList(List<List<String>> elements) {
@@ -24,15 +26,15 @@ public class Analyseur {
             int counter = 1;
 
             for (int i = 1; i < element.size(); i++) {
-                if (counter >= 4) {
-                    return Optional.of(token);
-                }
-
                 if (!token.equals(Grille.DEFAULT_INITIALIZATION_VALUE) && token.equals(element.get(i))) {
                     counter++;
                 } else {
                     token = element.get(i);
                     counter = 1;
+                }
+
+                if (counter >= 4) {
+                    return Optional.of(token);
                 }
             }
         }
