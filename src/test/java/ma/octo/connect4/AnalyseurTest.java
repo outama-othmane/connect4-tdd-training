@@ -37,6 +37,31 @@ public class AnalyseurTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void givenAGridWith4SuccessiveTokensVerticallyShouldReturnOptionalWithToken() {
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.getGrilleColumns()).thenReturn(getColumnsWith4SuccessiveOInTheSeventhColumn());
+
+        Analyseur analyseur = new Analyseur();
+        Optional<String> result = analyseur.checkForWinner(grille);
+
+        Optional<String> expected = Optional.of("o");
+
+        assertEquals(expected, result);
+    }
+
+    private List<List<String>> getColumnsWith4SuccessiveOInTheSeventhColumn() {
+        List<List<String>> columns = getInitializedListOfListString(7, 6);
+
+        List<String> column = columns.get(6);
+        column.set(1, "o");
+        column.set(2, "o");
+        column.set(3, "o");
+        column.set(4, "o");
+        return columns;
+    }
+
     private List<List<String>> getRowsWith4SuccessiveXInTheSixthRow() {
         List<List<String>> rows = getInitializedListOfListString(6, 7);
 
