@@ -14,5 +14,7 @@ public class Application {
     public void play() {
         vue.write(grille.grilleAsString());
         vue.write("Player1 enter column number [1-7]: ");
+
+        String userInput = vue.read();
     }
 }
