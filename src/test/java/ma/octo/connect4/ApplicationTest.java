@@ -92,4 +92,21 @@ public class ApplicationTest {
 
         Mockito.verify(vue).write("Please enter a valid number between [1-7].");
     }
+
+    @Test
+    public void playShouldInsertThePlayerTokenToTheGivenColumnInTheGrid() throws Exception {
+        int chosenColumn = 4;
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(". . .");
+
+        Analyseur analyseur = new Analyseur();
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(grille).insertInColumn(chosenColumn, "o");
+    }
 }

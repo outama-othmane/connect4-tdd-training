@@ -8,4 +8,6 @@ public interface GrilleAxes {
     List<List<String>> getGrilleDiagonals();
 
     String grilleAsString();
+
+    void insertInColumn(int column, String value) throws Exception;
 }

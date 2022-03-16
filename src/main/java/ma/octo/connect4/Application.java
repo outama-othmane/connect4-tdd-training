@@ -15,7 +15,14 @@ public class Application {
         vue.write(grille.grilleAsString());
         vue.write("Player1 enter column number [1-7]: ");
 
-        promptUserInput();
+        String player = "o";
+        int column = promptUserInput() - 1;
+
+        try {
+            grille.insertInColumn(column, player);
+        } catch (Exception ignored) {
+
+        }
     }
 
     private int promptUserInput() {
