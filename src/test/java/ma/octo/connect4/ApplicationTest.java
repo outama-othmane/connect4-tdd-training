@@ -63,4 +63,18 @@ public class ApplicationTest {
         Mockito.verify(vue).write("Please enter a valid number between [1-7].");
     }
 
+    @Test
+    public void playShouldPrintTryAgainMessageIfTheUserEnters8() {
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(". . .");
+
+        Analyseur analyseur = new Analyseur();
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn("8");
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write("Please enter a valid number between [1-7].");
+    }
 }

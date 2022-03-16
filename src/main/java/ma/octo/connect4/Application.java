@@ -19,5 +19,10 @@ public class Application {
 
         if ("hello".equals(userInput))
             vue.write("Please enter a valid number between [1-7].");
+
+        int userColumn = Integer.parseInt(userInput);
+
+        if (userColumn > 7)
+            vue.write("Please enter a valid number between [1-7].");
     }
 }
