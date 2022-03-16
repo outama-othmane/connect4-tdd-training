@@ -23,6 +23,8 @@ public class Application {
         } catch (Exception ignored) {
 
         }
+
+        vue.write(grille.grilleAsString());
     }
 
     private int promptUserInput() {

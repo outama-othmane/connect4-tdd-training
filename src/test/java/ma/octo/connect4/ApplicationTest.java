@@ -17,7 +17,7 @@ public class ApplicationTest {
         Application application = new Application(grille, analyseur, vue);
         application.play();
 
-        Mockito.verify(vue).write(grille.grilleAsString());
+        Mockito.verify(vue, Mockito.times(2)).write(grille.grilleAsString());
     }
 
     @Test
@@ -109,4 +109,26 @@ public class ApplicationTest {
 
         Mockito.verify(grille).insertInColumn(chosenColumn, "o");
     }
+
+    @Test
+    public void playShouldPrintAgainTheGridAfterFirstPlayerTurn() {
+        int chosenColumn = 4;
+        String firstGrid = ". . .";
+        String secondGrid = "SECOND TIME";
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(firstGrid).thenReturn(secondGrid);
+
+        Analyseur analyseur = new Analyseur();
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write(firstGrid);
+        Mockito.verify(vue).write(secondGrid);
+    }
+
+
 }
