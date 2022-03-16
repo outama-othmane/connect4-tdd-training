@@ -6,4 +6,6 @@ public interface GrilleAxes {
     List<List<String>> getGrilleColumns();
     List<List<String>> getGrilleRows();
     List<List<String>> getGrilleDiagonals();
+
+    String grilleAsString();
 }
