@@ -16,5 +16,8 @@ public class Application {
         vue.write("Player1 enter column number [1-7]: ");
 
         String userInput = vue.read();
+
+        if ("hello".equals(userInput))
+            vue.write("Please enter a valid number between [1-7].");
     }
 }

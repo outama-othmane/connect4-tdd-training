@@ -31,7 +31,6 @@ public class ApplicationTest {
         Application application = new Application(grille, analyseur, vue);
         application.play();
 
-        Mockito.verify(vue, Mockito.times(2)).write(Mockito.anyString());
         Mockito.verify(vue).write("Player1 enter column number [1-7]: ");
     }
 
@@ -47,6 +46,21 @@ public class ApplicationTest {
         application.play();
 
         Mockito.verify(vue).read();
+    }
+
+    @Test
+    public void playShouldPrintTryAgainMessageIfTheUserEntersHello() {
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(". . .");
+
+        Analyseur analyseur = new Analyseur();
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn("hello");
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write("Please enter a valid number between [1-7].");
     }
 
 }
