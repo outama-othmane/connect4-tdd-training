@@ -6,7 +6,6 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 public class ApplicationTest {
-
     @Test
     public void playShouldCallWriteVueAndPrintInitialGrid() throws AnalyseurDrawException {
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
@@ -166,5 +165,23 @@ public class ApplicationTest {
         Mockito.verify(vue).write("Player2 enter column number [1-7]: ");
     }
 
+    @Test
+    public void playShouldPrintTheWinnerMessage() throws AnalyseurDrawException {
+        int chosenColumn = 4;
+
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        Mockito.when(grille.grilleAsString()).thenReturn(". . .");
+
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        Mockito.when(analyseur.checkForWinner(grille)).thenReturn(Optional.of(Application.PLAYER_1));
+
+        Vue vue = Mockito.mock(Vue.class);
+        Mockito.when(vue.read()).thenReturn(String.valueOf(chosenColumn + 1));
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write(String.format("%s is the winner!", Application.PLAYER_1));
+    }
 
 }

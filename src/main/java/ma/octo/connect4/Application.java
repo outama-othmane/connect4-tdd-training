@@ -24,12 +24,15 @@ public class Application {
             vue.write(grille.grilleAsString());
             vue.write(String.format("%s enter column number [1-7]: ", currentPlayer));
             promptUserInput();
-            currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
 
             try {
                 winner = analyseur.checkForWinner(grille);
+                if (winner.isPresent()) {
+                    vue.write(String.format("%s is the winner!", currentPlayer));
+                }
             } catch (AnalyseurDrawException ignored) {}
 
+            currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
         } while (winner.isEmpty());
     }
 
