@@ -21,8 +21,7 @@ public class Application {
     public void play() {
         Optional<String> winner = Optional.empty();
         do {
-            vue.write(grille.grilleAsString());
-            vue.write(String.format("%s enter column number [1-7]: ", currentPlayer));
+            showRoundMessage();
             int chosenColumn = promptUserInput();
             if(chosenColumn < 0) continue;
             boolean isInserted = insertUserInputToGrid(chosenColumn);
@@ -30,15 +29,31 @@ public class Application {
             try {
                 winner = analyseur.checkForWinner(grille);
                 if (winner.isPresent()) {
-                    vue.write(String.format("%s is the winner!", currentPlayer));
+                    showWinMessage();
                 }
             } catch (AnalyseurDrawException ignored) {
-                vue.write("Game Over! It's a draw!");
+                showDrawMessage();
                 break;
             }
-
-            currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
+            switchCurrentPlayer();
         } while (winner.isEmpty());
+    }
+
+    private void switchCurrentPlayer() {
+        currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
+    }
+
+    private void showDrawMessage() {
+        vue.write(OutputMessages.DRAW.getMessage());
+    }
+
+    private void showWinMessage() {
+        vue.write(String.format(OutputMessages.WIN.getMessage(), currentPlayer));
+    }
+
+    private void showRoundMessage() {
+        vue.write(grille.grilleAsString());
+        vue.write(String.format(OutputMessages.PROMPT.getMessage(), currentPlayer, 1, 7));
     }
 
     private int promptUserInput() {
@@ -50,7 +65,7 @@ public class Application {
         } catch (NumberFormatException ignored) {}
 
         if (userChosenColumn > 7 || userChosenColumn < 1){
-            vue.write("Please enter a valid number between [1-7].");
+            vue.write(String.format(OutputMessages.VALID.getMessage(),1,7));
             return -1;
         }
         return userChosenColumn;
@@ -65,7 +80,7 @@ public class Application {
             return true;
         }
         catch (ColumnGrilleException ex){
-            vue.write("The column is full. Please try again!");
+            vue.write(OutputMessages.FULL_COLUMN.getMessage());
         }
         catch (Exception ignored) {}
         return false;
