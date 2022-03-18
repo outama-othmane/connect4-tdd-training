@@ -23,8 +23,10 @@ public class Application {
         do {
             vue.write(grille.grilleAsString());
             vue.write(String.format("%s enter column number [1-7]: ", currentPlayer));
-            promptUserInput();
-
+            int chosenColumn = promptUserInput();
+            if(chosenColumn < 0) continue;
+            boolean isInserted = insertUserInputToGrid(chosenColumn);
+            if(!isInserted) continue;
             try {
                 winner = analyseur.checkForWinner(grille);
                 if (winner.isPresent()) {
@@ -42,33 +44,27 @@ public class Application {
 
         try {
             userChosenColumn = Integer.parseInt(userInput);
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException ignored) {}
 
+        if (userChosenColumn > 7 || userChosenColumn < 1){
+            vue.write("Please enter a valid number between [1-7].");
+            return -1;
         }
-
-        if (userChosenColumn > 7)
-            vue.write("Please enter a valid number between [1-7].");
-
-        if (userChosenColumn < 1)
-            vue.write("Please enter a valid number between [1-7].");
-
-        insertUserInputToGrid(userChosenColumn);
-
         return userChosenColumn;
+
     }
 
-    private void insertUserInputToGrid(int userChosenColumn) {
-        String player = "o";
+    private boolean insertUserInputToGrid(int userChosenColumn) {
         int column = userChosenColumn - 1;
 
         try {
-            grille.insertInColumn(column, player);
+            grille.insertInColumn(column, currentPlayer);
+            return true;
         }
         catch (ColumnGrilleException ex){
             vue.write("The column is full. Please try again!");
         }
-        catch (Exception ignored) {
-
-        }
+        catch (Exception ignored) {}
+        return false;
     }
 }

@@ -2,7 +2,6 @@ package ma.octo.connect4;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoRule;
 
 import java.util.Optional;
 
@@ -18,6 +17,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
+        when(vue.read()).thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -34,6 +34,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
+        when(vue.read()).thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -50,6 +51,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
+        when(vue.read()).thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -66,7 +68,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
-        when(vue.read()).thenReturn("hello");
+        when(vue.read()).thenReturn("hello").thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -83,7 +85,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
-        when(vue.read()).thenReturn("8");
+        when(vue.read()).thenReturn("8").thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -100,7 +102,7 @@ public class ApplicationTest {
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("String"));
 
         Vue vue = Mockito.mock(Vue.class);
-        when(vue.read()).thenReturn("0");
+        when(vue.read()).thenReturn("0").thenReturn("1");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
@@ -124,7 +126,7 @@ public class ApplicationTest {
         Application application = new Application(grille, analyseur, vue);
         application.play();
 
-        Mockito.verify(grille).insertInColumn(chosenColumn, "o");
+        Mockito.verify(grille).insertInColumn(eq(chosenColumn), anyString());
     }
 
     @Test
@@ -195,12 +197,14 @@ public class ApplicationTest {
         when(grille.grilleAsString()).thenReturn(". . .");
         doThrow(ColumnGrilleException.class).when(grille)
                 .insertInColumn(eq(fullColumnNumber), anyString());
-
+        doNothing().when(grille)
+                .insertInColumn(eq(4), anyString());
         Analyseur analyseur = Mockito.mock(Analyseur.class);
         when(analyseur.checkForWinner(grille)).thenReturn(Optional.of("."));
 
         Vue vue = Mockito.mock(Vue.class);
-        when(vue.read()).thenReturn(String.valueOf(fullColumnNumber + 1));
+        when(vue.read()).thenReturn(String.valueOf(fullColumnNumber + 1))
+                .thenReturn("5");
 
         Application application = new Application(grille, analyseur, vue);
         application.play();
