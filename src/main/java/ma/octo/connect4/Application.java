@@ -63,7 +63,11 @@ public class Application {
 
         try {
             grille.insertInColumn(column, player);
-        } catch (Exception ignored) {
+        }
+        catch (ColumnGrilleException ex){
+            vue.write("The column is full. Please try again!");
+        }
+        catch (Exception ignored) {
 
         }
     }
