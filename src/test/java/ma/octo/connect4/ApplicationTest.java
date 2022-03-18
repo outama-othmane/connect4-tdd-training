@@ -190,7 +190,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldPrintChoseANoneFullColumnMessageIfTheUserTriesToInsertToAFullColumnOfTheGrid() throws Exception {
+    public void playShouldPrintChoseANoneFullColumnMessageIfTheUserTriesToInsertToAFullColumnOfTheGrid() throws Exception {
 
         int fullColumnNumber = 0;
         GrilleAxes grille = Mockito.mock(GrilleAxes.class);
@@ -212,4 +212,23 @@ public class ApplicationTest {
         Mockito.verify(vue).write("The column is full. Please try again!");
     }
 
+    @Test
+    public void playShouldPrintItWAsADRawWhenGameIsOverAndNoWinner() throws Exception {
+        GrilleAxes grille = Mockito.mock(GrilleAxes.class);
+        when(grille.grilleAsString()).thenReturn(". . .");
+
+        doNothing().when(grille)
+                .insertInColumn(eq(4), anyString());
+        Analyseur analyseur = Mockito.mock(Analyseur.class);
+        when(analyseur.checkForWinner(grille)).thenThrow(AnalyseurDrawException.class)
+                .thenReturn(Optional.of("."));
+
+        Vue vue = Mockito.mock(Vue.class);
+        when(vue.read()).thenReturn("5");
+
+        Application application = new Application(grille, analyseur, vue);
+        application.play();
+
+        Mockito.verify(vue).write("Game Over! It's a draw!");
+    }
 }

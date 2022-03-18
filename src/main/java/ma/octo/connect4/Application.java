@@ -32,7 +32,10 @@ public class Application {
                 if (winner.isPresent()) {
                     vue.write(String.format("%s is the winner!", currentPlayer));
                 }
-            } catch (AnalyseurDrawException ignored) {}
+            } catch (AnalyseurDrawException ignored) {
+                vue.write("Game Over! It's a draw!");
+                break;
+            }
 
             currentPlayer = PLAYER_1.equals(currentPlayer) ? PLAYER_2 : PLAYER_1;
         } while (winner.isEmpty());
